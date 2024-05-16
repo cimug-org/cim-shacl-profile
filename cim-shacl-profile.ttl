@@ -17,16 +17,19 @@ cimsh:NodeShapeShape a sh:NodeShape ;
     sh:property cimsh:severityShape ;
     sh:property sh:messageShape ;
     sh:property cimsh:propertyShape ;
-    sh:property cimsh:closedShape ;
-    sh:property cimsh:andShape ;
+    sh:or (
+        [sh:property cimsh:closedShape ]
+        [sh:property cimsh:andShape ]
+    )
     sh:property cimsh:sparqlShape ;
-    sh:sparql cimsh:ClosedOrAndConstraint ;
+    # sh:sparql cimsh:ClosedOrAndConstraint ;
     .
 
 
 cimsh:PropertyShapeShape a sh:NodeShape ;
     sh:description "The contstraint on property shapes for modeling shacl in the CIM context"@en ;
     sh:targetClass sh:PropertyShape ;
+    sh:property cimsh:pathShape ;
     sh:property cimsh:severityShape ;
     sh:property cimsh:messageShape ;
     sh:property cimsh:minCountShape ;
@@ -35,7 +38,6 @@ cimsh:PropertyShapeShape a sh:NodeShape ;
     sh:property cimsh:datatypeShape ;
     sh:property cimsh:nodeShape ;
     sh:property cimsh:classShape ;
-    sh:property cimsh:pathShape ;
     sh:property cimsh:inShape ;
     sh:property cimsh:severityShape ;
     sh:sparql cimsh:PropertyOrRelationConstraint ;
@@ -52,3 +54,95 @@ cimsh:SPARQLConstraintShape a sh:NodeShape ;
 
 
 ### PropertyShapes
+
+### Property shapes for NodeShape
+
+cimsh:descriptionShape a sh:PropertyShape ;
+    sh:description "the shape that constraints how descriptions should be used"@en;
+    sh:severity sh:warning ;
+    sh:message "Your shape misses a description"@en ;
+    sh:path sh:description ;
+    sh:minCount 1 ;
+    sh:or (
+        [
+            sh:datatype xsd:string;
+        ]
+        [
+            sh:datatype rdf:langString ;
+        ]
+    ) ;
+    .
+
+cimsh:targetClassShape a sh:PropertyShape ;
+    sh:path sh:targetClass ;
+    sh:description "a nodeshape should have a target class when using it for cim modelling"@en;
+    sh:minCount 1 ;
+    sh:minCount 1 ;
+    sh:severity sh:violation ;
+    .
+
+cimsh:severityShape a sh:PropertyShape ;
+    sh:description "the severity is optional, if not specifified shacl will assume it is a violation"@en ;
+    sh:path sh:severity ;
+    sh:in (
+        sh:violation 
+        sh:warning
+        sh:info
+    );
+    sh:maxCount 1 ;
+    sh:message "The shape has more than 1 severity, or its value is is not in the supported list"@en ;
+    .
+
+cimsh:messageShape a sh:PropertyShape ;
+    sh:description "constraints for the message attribute"@en ;
+    sh:path sh:message ;
+    sh:maxCount 1 ;
+    sh:severity sh:warning ;
+    sh:message "the shape has more than 1 warning" ;
+    .
+
+cimsh:propertyShape a sh:PropertyShape ;
+    sh:description "a nodeshape should have at least 1 property"@en ;
+    sh:path sh:property ;
+    sh:minCount 1 ;
+    sh:severity sh:violation ;
+    sh:class sh:PropertyShape ;
+    sh:message "the nodeshape has no propertyshapes associated with it, 
+    or the property does not point to a sh:PropertyShape"@en ;
+    .    
+
+cimsh:closedShape a sh:PropertyShape ;
+    sh:description "use of sh:closed is optional but it can only be used once per shape"@en;
+    sh:path sh:closed ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:boolean ;
+    sh:severity sh:violation ;
+    sh:message "your shape has more than one sh:closed attribute, or its value is not a boolean"@en ; 
+    .
+
+cimsh:andShape a sh:PropertyShape ;
+    sh:description "the constraint on the use of sh:and" ;
+    sh:path sh:and ;
+    sh:severity sh:violation ;
+    sh:message "the nodeshape had more than one sh:and or its value is not a list";
+    sh:class rdf:List ;
+    .
+
+cimsh:sparqlShape a sh:PropertyShape ;
+    sh:description ""@en;
+    sh:path sh:sparql ;
+    sh:class sh:SPARQLConstraint ;
+    sh:message "the target uri is not a SPARQL Constraint"@en ;
+    .
+
+### Property shapes for Property shapes
+
+
+cimsh:pathShape a sh:PropertyShape ;
+    sh:message ""@en ;
+    sh:path sh:path ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:severity sh:violation ;
+    sh:message "the property shape misses a path or has more than one"@en;
+    .

@@ -1,0 +1,54 @@
+@prefix rdf: 	<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+@prefix sh: 	<http://www.w3.org/ns/shacl#>
+@prefix xsd: 	<http://www.w3.org/2001/XMLSchema#>
+@prefix rdfs: 	<http://www.w3.org/2000/01/rdf-schema#>
+@prefix cim:    <>
+@prefix cimsh:  <https://www.ucaiug.org/cim/shacl-profile#>
+@base <https://www.ucaiug.org/cim/shacl-profile#>
+
+
+### NodeShapes
+
+cimsh:NodeShapeShape a sh:NodeShape ;
+    sh:description "The constraint in nodeshapes for modelling shacl in the CIM context"@en ;
+    sh:targetClass sh:NodeShape ;
+    sh:property cimsh:descriptionShape ;
+    sh:property cimsh:targetClassShape ;
+    sh:property cimsh:severityShape ;
+    sh:property sh:messageShape ;
+    sh:property cimsh:propertyShape ;
+    sh:property cimsh:closedShape ;
+    sh:property cimsh:andShape ;
+    sh:property cimsh:sparqlShape ;
+    sh:sparql cimsh:ClosedOrAndConstraint ;
+    .
+
+
+cimsh:PropertyShapeShape a sh:NodeShape ;
+    sh:description "The contstraint on property shapes for modeling shacl in the CIM context"@en ;
+    sh:targetClass sh:PropertyShape ;
+    sh:property cimsh:severityShape ;
+    sh:property cimsh:messageShape ;
+    sh:property cimsh:minCountShape ;
+    sh:property cimsh:maxCountShape ;
+    sh:property cimsh:sparqlShape ;
+    sh:property cimsh:datatypeShape ;
+    sh:property cimsh:nodeShape ;
+    sh:property cimsh:classShape ;
+    sh:property cimsh:pathShape ;
+    sh:property cimsh:inShape ;
+    sh:property cimsh:severityShape ;
+    sh:sparql cimsh:PropertyOrRelationConstraint ;
+    .
+
+cimsh:SPARQLConstraintShape a sh:NodeShape ;
+    sh:targetClass sh:SPARQLConstraint ;
+    sh:description "the constraint on SPARQL Constraints for modeling shacl in the CIM context."@en ;
+    sh:property cimsh:messageShape ;
+    sh:property cimsh:prefixesShape ;
+    sh:property cimsh:selectShape ;
+    sh:property cimsh:severityShape ;
+    .    
+
+
+### PropertyShapes

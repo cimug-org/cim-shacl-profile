@@ -2,7 +2,7 @@
 @prefix sh: 	<http://www.w3.org/ns/shacl#>
 @prefix xsd: 	<http://www.w3.org/2001/XMLSchema#>
 @prefix rdfs: 	<http://www.w3.org/2000/01/rdf-schema#>
-@prefix cim:    <>
+@prefix cim:    <https://cim.ucaiug.io/ns#>
 @prefix cimsh:  <https://www.ucaiug.org/cim/shacl-profile#>
 @base <https://www.ucaiug.org/cim/shacl-profile#>
 
@@ -79,6 +79,7 @@ cimsh:targetClassShape a sh:PropertyShape ;
     sh:minCount 1 ;
     sh:minCount 1 ;
     sh:severity sh:violation ;
+    sh:nodeKind sh:IRI ;
     .
 
 cimsh:severityShape a sh:PropertyShape ;
@@ -139,10 +140,34 @@ cimsh:sparqlShape a sh:PropertyShape ;
 
 
 cimsh:pathShape a sh:PropertyShape ;
-    sh:message ""@en ;
+    sh:description ""@en ;
     sh:path sh:path ;
     sh:maxCount 1 ;
     sh:minCount 1 ;
     sh:severity sh:violation ;
     sh:message "the property shape misses a path or has more than one"@en;
+    sh:nodeKind sh:IRI;
     .
+
+cimsh:minCountShape a sh:PropertyShape ;
+    sh:description ""@en ;
+    sh:path sh:minCount ;
+    sh:datatype xsd:int ;
+    sh:maxCount 1 ;
+    .
+
+
+cimsh:maxCountShape a sh:PropertyShape ;
+    sh:description ""@en ;
+    sh:path sh:maxCount ;
+    sh:datatype xsd:int ;
+    sh:maxCount 1 ;
+    .
+
+cimsh:datatypeShape a sh:PropertyShape; 
+    sh:description ""@en;
+    sh:path sh:datatype ;
+    sh:maxCount 1 ;
+    sh:nodeKind sh:IRI;
+    .
+

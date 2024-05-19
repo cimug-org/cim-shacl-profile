@@ -1,0 +1,42 @@
+id: https://www.ucaiug.org/cim/shacl-profile#
+name: cim-shacl-profile
+prefixes:
+  linkml: https://w3id.org/linkml/
+  personinfo: https://w3id.org/linkml/examples/personinfo
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  sh: http://www.w3.org/ns/shacl#
+  xsd: http://www.w3.org/2001/XMLSchema#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+  cim: https://cim.ucaiug.io/ns#
+  cimsh: https://www.ucaiug.org/cim/shacl-profile#
+imports:
+  - linkml:types
+default_range: string
+default_prefix: cimsh
+
+classes:
+
+  NodeShape:
+    class_uri: sh:NodeShape
+    description: constraint on the use of nodeshapes in the context of the CIM
+    attributes:
+      id:
+        identifier: true
+      description:
+        slot_uri: sh:description  
+        range: string
+      targetClass:
+        slot_uri: sh:targetClass
+        # range: rdfs:Class
+      # severity: 
+      #   slot_uri: sh:severity:
+      #   range: 
+      #     - sh:violation
+      #     - sh:warning
+      #     - sh:info
+      message: 
+        slot_uri: sh:message
+        range: string        
+
+
+
